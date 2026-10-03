@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Fidget Lab: brinquedos antiestresse online e grátis. Plástico bolha, spinner, botão infinito, teclado, jogo de memória e mais, direto no navegador.">
+<meta property="og:title" content="Fidget Lab — brinquedos antiestresse online">
+<meta property="og:description" content="Aperte, gire, estoure e relaxe. Grátis, sem cadastro.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://bmbelo87.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+<title>Fidget Lab — Brinquedos antiestresse online grátis</title>
+<style>
+:root{--bg:#090b12;--panel:#111522;--panel2:#171c2b;--text:#edf1ff;--muted:#8992ad;--accent:#8b5cf6;--accent2:#22d3ee;--good:#34d399}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 20% 0%,#1d1535 0,#090b12 38%),#090b12;color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;overflow-x:hidden}
+header{padding:28px 24px 18px;display:flex;justify-content:space-between;align-items:end;max-width:1400px;margin:auto}
+h1{margin:0;font-size:32px;letter-spacing:-1px} header p{margin:6px 0 0;color:var(--muted)}
+#score{font-weight:800;color:var(--accent2);font-size:18px}
+main{max-width:1400px;margin:auto;padding:0 24px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:linear-gradient(145deg,#131827,#0f1320);border:1px solid #252c40;border-radius:18px;padding:16px;min-height:220px;box-shadow:0 10px 35px #0005;overflow:hidden}
+.card h2{font-size:15px;margin:0 0 5px}.desc{font-size:12px;color:var(--muted);margin-bottom:13px}
+.pad{height:145px;background:#0a0d16;border:1px solid #242a3b;border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+button,.fakebtn{border:0;color:white;background:linear-gradient(145deg,#8b5cf6,#6d28d9);border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;box-shadow:0 5px 0 #48209b;transition:.08s;user-select:none}
+button:active,.fakebtn:active{transform:translateY(4px);box-shadow:0 1px 0 #48209b}
+.bigbtn{width:105px;height:105px;border-radius:50%;font-size:18px;background:radial-gradient(circle at 35% 30%,#c4b5fd,#7c3aed 48%,#4c1d95);box-shadow:0 8px 0 #30106f,0 0 35px #8b5cf655}
+.bigbtn:active{box-shadow:0 2px 0 #30106f}
+.counter{position:absolute;top:9px;right:11px;color:#aeb7d0;font-size:12px}
+.range{width:80%;accent-color:var(--accent)} input[type=range]{cursor:pointer}
+.spinner{width:82px;height:82px;border-radius:50%;border:10px dotted #a78bfa;display:flex;align-items:center;justify-content:center;cursor:grab;user-select:none;touch-action:none;font-size:27px}
+.spinner:active{cursor:grabbing}.bubble{width:32px;height:32px;border-radius:50%;background:linear-gradient(145deg,#fff,#a78bfa 35%,#5b21b6);box-shadow:inset -5px -7px 8px #32106d,0 0 15px #8b5cf655;cursor:pointer}
+.bubbles{display:flex;flex-wrap:wrap;gap:9px;padding:14px;align-content:center;justify-content:center}.bubble.popped{animation:pop .16s forwards}
+@keyframes pop{to{transform:scale(1.8);opacity:0}}
+.target{position:absolute;width:30px;height:30px;border-radius:50%;background:#22d3ee;box-shadow:0 0 22px #22d3ee;cursor:pointer}
+#reaction{font-size:26px;font-weight:900}.reaction-wait{color:#fbbf24}.reaction-go{color:#34d399}
+#draw{width:100%;height:100%;cursor:crosshair}.dice{font-size:62px;cursor:pointer;user-select:none;transition:.15s}.dice.roll{animation:roll .45s}@keyframes roll{50%{transform:rotate(180deg) scale(.65)}}
+.keys{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:12px}.key{height:55px;border:1px solid #30384e;border-radius:8px;background:#1a2030;display:flex;align-items:center;justify-content:center;color:#9ba6c2;font-weight:800;cursor:pointer}.key.on{background:#8b5cf6;color:#fff;transform:translateY(2px)}
+.switch{width:65px;height:34px;border-radius:30px;background:#30384e;padding:4px;cursor:pointer}.switch i{display:block;width:26px;height:26px;border-radius:50%;background:#cbd5e1;transition:.2s}.switch.on{background:#10b981}.switch.on i{transform:translateX(31px)}
+.meter{width:80%;height:18px;background:#252b3d;border-radius:20px;overflow:hidden}.meter i{display:block;height:100%;width:50%;background:linear-gradient(90deg,#8b5cf6,#22d3ee);transition:.1s}
+.memory{display:grid;grid-template-columns:repeat(4,38px);gap:6px}.mem{width:38px;height:38px;border-radius:7px;background:#242b40;cursor:pointer}.mem.lit{background:#22d3ee;box-shadow:0 0 15px #22d3ee}.mem.correct{background:#34d399}
+.particle{position:absolute;width:6px;height:6px;border-radius:50%;background:#a78bfa;pointer-events:none}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#171c2b;border:1px solid #30384e;padding:10px 16px;border-radius:12px;color:#dce3f7;opacity:0;transition:.2s;pointer-events:none}.wide{grid-column:span 2}
+@media(max-width:1000px){main{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){main{grid-template-columns:1fr;padding:0 12px 30px}.wide{grid-column:span 1}header{padding:22px 12px 16px}}
+nav.top{max-width:1400px;margin:auto;padding:14px 24px 0;display:flex;gap:18px;font-size:13px;flex-wrap:wrap}nav.top a,footer a{color:var(--muted);text-decoration:none}nav.top a:hover,footer a:hover{color:var(--accent2)}
+#best{font-size:12px;color:var(--muted);text-align:right}
+.content{max-width:900px;margin:10px auto 0;padding:0 24px 30px;line-height:1.65;color:#c9d0e6}.content h2{color:var(--text);font-size:22px;margin:30px 0 8px}.content h3{color:var(--text);font-size:16px;margin:18px 0 4px}
+footer{border-top:1px solid #252c40;padding:22px 24px;text-align:center;color:var(--muted);font-size:13px}footer a{margin:0 8px}
+</style>
+</head>
+<body>
+<nav class="top"><a href="/">Início</a><a href="#como">Como usar</a><a href="sobre.html">Sobre</a><a href="privacidade.html">Privacidade</a></nav>
+<header><div><h1>✦ Fidget Lab</h1><p>Uma coleção de pequenas coisas para apertar, girar, clicar e brincar.</p></div><div><div id="score">0 pontos</div><div id="best">Recorde: 0</div></div></header>
+<main>
+<section class="card"><h2>🔘 Botão infinito</h2><div class="desc">Aperte. Não há propósito.</div><div class="pad"><span class="counter" id="clicks">0</span><button class="bigbtn" id="big">PRESS</button></div></section>
+<section class="card"><h2>🌀 Spinner</h2><div class="desc">Arraste para girar.</div><div class="pad"><div class="spinner" id="spinner">↻</div></div></section>
+<section class="card"><h2>🎚️ Slider zen</h2><div class="desc">Encontre o ponto perfeito.</div><div class="pad"><input class="range" id="slider" type="range" min="0" max="100" value="50"><span class="counter" id="sliderVal">50%</span></div></section>
+<section class="card"><h2>🫧 Bubble wrap</h2><div class="desc">Estoure todas. Elas voltam.</div><div class="pad bubbles" id="bubbles"></div></section>
+<section class="card"><h2>⚡ Reflexo</h2><div class="desc">Clique quando ficar verde.</div><div class="pad"><div id="reaction">Aguarde...</div></div></section>
+<section class="card"><h2>🎲 Dado</h2><div class="desc">Clique para rolar.</div><div class="pad"><div class="dice" id="dice">⚀</div></div></section>
+<section class="card"><h2>🔘 Switch</h2><div class="desc">Ligue e desligue sem motivo.</div><div class="pad"><div class="switch" id="switch"><i></i></div></div></section>
+<section class="card"><h2>📊 Medidor</h2><div class="desc">Clique para aumentar a energia.</div><div class="pad" style="flex-direction:column;gap:14px"><div class="meter"><i id="energy"></i></div><button id="charge">CARREGAR</button></div></section>
+<section class="card wide"><h2>🎹 Mini teclado</h2><div class="desc">Clique ou use A S D F G H J. Cada tecla faz um som diferente.</div><div class="pad"><div class="keys" id="keys"></div></div></section>
+<section class="card"><h2>🎯 Clique no alvo</h2><div class="desc">Quanto tempo você aguenta?</div><div class="pad" id="targetPad"><div class="target" id="target"></div><span class="counter" id="targetScore">0</span></div></section>
+<section class="card"><h2>🧠 Memória rápida</h2><div class="desc">Repita a sequência de luzes.</div><div class="pad"><div class="memory" id="memory"></div></div></section>
+<section class="card wide"><h2>✏️ Rabisco</h2><div class="desc">Desenhe qualquer coisa. Clique duas vezes para limpar.</div><div class="pad"><canvas id="draw"></canvas></div></section>
+</main>
+<article class="content" id="como">
+<h2>O que é o Fidget Lab?</h2>
+<p>O Fidget Lab é uma coleção gratuita de brinquedos antiestresse digitais que funcionam direto no navegador, no computador ou no celular. Sem cadastro e sem download: é só abrir e começar a apertar, girar e estourar.</p>
+<p>Inspirados nos fidget toys físicos, como o pop it, o fidget spinner e o famoso plástico bolha, esses pequenos passatempos ajudam a ocupar as mãos e a mente por alguns segundos, oferecendo uma pausa rápida durante o trabalho ou os estudos.</p>
+<h2>Como usar cada brinquedo</h2>
+<h3>🔘 Botão infinito e Switch</h3><p>Clique quantas vezes quiser. Cada clique tem um som curto e soma pontos ao seu placar.</p>
+<h3>🌀 Spinner</h3><p>Clique (ou toque) e arraste para os lados para girar o spinner.</p>
+<h3>🫧 Bubble wrap</h3><p>Estoure as bolhas uma a uma. Quando todas estourarem, a cartela se renova.</p>
+<h3>⚡ Reflexo e 🎯 Clique no alvo</h3><p>Teste sua velocidade: espere o sinal verde e clique o mais rápido possível, ou persiga o alvo que muda de lugar.</p>
+<h3>🧠 Memória rápida</h3><p>Observe a sequência de luzes e repita na mesma ordem. A cada acerto, a sequência fica maior.</p>
+<h3>🎹 Mini teclado e ✏️ Rabisco</h3><p>Toque notas com o mouse ou com as teclas A S D F G H J, e desenhe livremente no quadro. Clique duas vezes para limpar o desenho.</p>
+<h2>Por que fidget toys ajudam?</h2>
+<p>Muitas pessoas sentem que manter as mãos ocupadas ajuda a aliviar a ansiedade, reduzir a inquietação e manter o foco em tarefas longas. Pequenas pausas lúdicas também quebram a monotonia e ajudam a recarregar a atenção. O Fidget Lab não substitui orientação profissional, mas pode ser um bom companheiro para momentos de tensão.</p>
+<h2>Dicas</h2>
+<p>Ative o som do dispositivo para ouvir os efeitos. Seus pontos e seu recorde ficam salvos apenas no seu navegador. Funciona melhor em navegadores atualizados como Chrome, Firefox, Edge e Safari.</p>
+</article>
+<footer>© 2026 Fidget Lab · <a href="sobre.html">Sobre</a><a href="privacidade.html">Política de Privacidade</a></footer>
+<div id="toast">+1</div>
+<script>
+const $=s=>document.querySelector(s), toast=$('#toast'); let points=0;
+function beep(freq=440,dur=.045,type='sine'){try{let c=beep.ctx||(beep.ctx=new AudioContext),o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.045,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+dur)}catch(e){}}
+let best=0;try{best=+localStorage.getItem('fl_best')||0}catch(e){}const showBest=()=>$('#best').textContent='Recorde: '+best;showBest();
+function add(n=1){points+=n;$('#score').textContent=points+' pontos';if(points>best){best=points;showBest();try{localStorage.setItem('fl_best',best)}catch(e){}}toast.textContent='+'+n;toast.style.opacity=1;clearTimeout(add.t);add.t=setTimeout(()=>toast.style.opacity=0,350)}
+let clicks=0;$('#big').onclick=()=>{clicks++;$('#clicks').textContent=clicks;add();beep(160+clicks%8*30,.035)};
+let spinning=false,last=0,angle=0;$('#spinner').onpointerdown=e=>{spinning=true;last=e.clientX};window.onpointermove=e=>{if(spinning){angle+=(e.clientX-last)*2;last=e.clientX;$('#spinner').style.transform=`rotate(${angle}deg)`}};window.onpointerup=()=>spinning=false;
+$('#slider').oninput=e=>{$('#sliderVal').textContent=e.target.value+'%';beep(180+e.target.value*6,.02)};
+function makeBubbles(){let b=$('#bubbles');b.innerHTML='';for(let i=0;i<18;i++){let x=document.createElement('div');x.className='bubble';x.onclick=()=>{x.classList.add('popped');add();beep(300+i*20,.025);setTimeout(()=>{x.classList.remove('popped')},170)};b.appendChild(x)}}makeBubbles();
+let reactionStart=0, reactionTimeout;function reaction(){let r=$('#reaction');r.className='reaction-wait';r.textContent='...';clearTimeout(reactionTimeout);reactionTimeout=setTimeout(()=>{r.className='reaction-go';r.textContent='CLIQUE!';reactionStart=performance.now();beep(700,.08)},700+Math.random()*2200)};reaction();
+$('#reaction').onclick=()=>{if($('#reaction').classList.contains('reaction-go')){let ms=Math.round(performance.now()-reactionStart);$('#reaction').textContent=ms+' ms';add(ms<300?5:2);beep(900,.06);setTimeout(reaction,900)}};
+const faces=['⚀','⚁','⚂','⚃','⚄','⚅'];$('#dice').onclick=()=>{let d=$('#dice');d.classList.add('roll');setTimeout(()=>{d.textContent=faces[Math.floor(Math.random()*6)];d.classList.remove('roll')},100);add(2);beep(260+Math.random()*400,.06)};
+$('#switch').onclick=()=>{$('#switch').classList.toggle('on');add();beep($('#switch').classList.contains('on')?700:280,.05)};
+let energy=50;$('#charge').onclick=()=>{energy=Math.min(100,energy+Math.random()*18);$('#energy').style.width=energy+'%';add();beep(220+energy*5,.04);if(energy>=100)setTimeout(()=>{energy=0;$('#energy').style.width='0%'},300)};
+const keyNames=['A','S','D','F','G','H','J'];keyNames.forEach((k,i)=>{let x=document.createElement('div');x.className='key';x.textContent=k;x.dataset.key=k;x.onclick=()=>pressKey(x,i);$('#keys').appendChild(x)});function pressKey(x,i){x.classList.add('on');setTimeout(()=>x.classList.remove('on'),90);beep(220*Math.pow(2,i/7),.13,'triangle');add()}window.onkeydown=e=>{let i=keyNames.indexOf(e.key.toUpperCase());if(i>=0)pressKey(document.querySelectorAll('.key')[i],i)};
+const tp=$('#targetPad'),t=$('#target'),ts=$('#targetScore');let tscore=0;function moveTarget(){t.style.left=(Math.random()*80+8)+'%';t.style.top=(Math.random()*70+12)+'%'}moveTarget();t.onclick=()=>{tscore++;ts.textContent=tscore;add(2);beep(500+tscore*15,.035);moveTarget()};
+const mem=$('#memory');let seq=[],input=[];for(let i=0;i<16;i++){let x=document.createElement('div');x.className='mem';x.onclick=()=>memClick(i);mem.appendChild(x)}function newMem(){seq=[...Array(5)].map(()=>Math.floor(Math.random()*16));input=[];let cells=[...mem.children];seq.forEach((n,j)=>setTimeout(()=>{cells[n].classList.add('lit');setTimeout(()=>cells[n].classList.remove('lit'),180)},j*300))}function memClick(i){input.push(i);mem.children[i].classList.add('lit');setTimeout(()=>mem.children[i].classList.remove('lit'),120);if(input[input.length-1]!==seq[input.length-1]){input=[];beep(100,.15,'sawtooth');setTimeout(newMem,500);return}if(input.length===seq.length){add(10);beep(900,.18);mem.children[i].classList.add('correct');setTimeout(()=>{[...mem.children].forEach(x=>x.classList.remove('correct'));newMem()},500)}}newMem();
+const canvas=$('#draw'),ctx=canvas.getContext('2d');function resize(){canvas.width=canvas.clientWidth*devicePixelRatio;canvas.height=canvas.clientHeight*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio)}resize();addEventListener('resize',resize);let drawing=false;canvas.onpointerdown=e=>{drawing=true;ctx.beginPath();ctx.moveTo(e.offsetX,e.offsetY)};canvas.onpointermove=e=>{if(!drawing)return;ctx.lineTo(e.offsetX,e.offsetY);ctx.strokeStyle='#a78bfa';ctx.lineWidth=3;ctx.lineCap='round';ctx.stroke()};canvas.onpointerup=()=>drawing=false;canvas.ondblclick=()=>{ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);add(2)};
+document.body.onpointerdown=e=>{if(e.target===document.body){let p=document.createElement('div');p.className='particle';p.style.left=e.clientX+'px';p.style.top=e.clientY+'px';document.body.appendChild(p);p.animate([{transform:'scale(1)',opacity:1},{transform:'translateY(-70px) scale(0)',opacity:0}],{duration:600});setTimeout(()=>p.remove(),600)}};
+</script>
+</body></html>
